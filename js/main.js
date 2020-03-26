@@ -1,9 +1,9 @@
-var money = 10;
-var income = 5;
-var addExpenses = 8;
-var deposit = 100;
-var mission = 'complete';
-var period = '30 day';
+const money = 10;
+const income = 5;
+const addExpenses = 8;
+const deposit = 100;
+const mission = 'complete';
+const period = '30 day';
 
 alert(period + ' ' + mission);
 
