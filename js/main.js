@@ -1,10 +1,22 @@
-const money = 10;
-const income = 5;
-const addExpenses = 8;
-const deposit = 100;
-const mission = 'complete';
-const period = '30 day';
+const money = 100;
+const income = 'фриланс';
+const addExpenses = 'Интернет, Такси, Коммуналка';
+const deposit = true;
+const mission = 1000;
+const period = 6;
 
-alert(period + ' ' + mission);
+console.log('money: ', typeof money);
+console.log('income: ',typeof income);
+console.log('deposit: ',typeof deposit);
 
-console.log(deposit - money + '$ осталось');
+console.log('addExpenses: ', addExpenses.length);
+
+console.log(`Период равен ${period} месяцев`);
+console.log(`Цель заработать ${mission} рублей`);
+
+console.log(addExpenses.toLowerCase().split(', '));
+
+let budgetDay;
+
+budgetDay = money / 30;
+console.log('budgetDay: ', budgetDay);
