@@ -1,40 +1,77 @@
 "use strict";
 
+let isNumber = function(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
 const income = 'фриланс';
 const mission = 100000;
 const period = 6;
 
-let money = prompt('Ваш месячный доход', '10000');
+let money;
 let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Интернет, Такси, Коммуналка');
 let deposit = confirm('Есть ли у вас депозит в банке?');
 
-let expenses1 = prompt('Введите обязательную статью расходов?', 'Интернет');
-let amount1 = prompt('Во сколько это обойдется?', '1000');
-let expenses2 = prompt('Введите обязательную статью расходов?', 'Такси');
-let amount2 = prompt('Во сколько это обойдется?', '2000');
+let start = function() {
+  money = prompt('Ваш месячный доход', '10000');
 
+  do {
+    money = prompt('Ваш месячный доход', '10000');
+  }
+  while(!isNumber(money));
+};
+start();
+
+let expenses = [];
 
 function showTypeOf(data) {
   console.log(`${data} : ${typeof data}`);
 }
 
-function getExpensesMonth(sum1, sum2) {
-  return parseInt(sum1) + parseInt(sum2);
+function getExpensesMonth() {
+
+  let sum = 0;
+
+  for (let i = 0; i < 2; i++) {
+    if (i === 0) {
+      expenses[i] = prompt('Введите обязательную статью расходов?', 'Интернет');
+    }
+
+    sum += +prompt('Во сколько это обойдется?', '2000');
+    do {
+      sum += +prompt('Во сколько это обойдется?', '2000');
+    }
+    while(!isNumber(sum));
+    
+  }  
+  return sum;
 }
 
+let expensesAmount = getExpensesMonth();
+
 function getAccumulatedMonth() {
-  return money - getExpensesMonth(amount1, amount2);
+  return money - expensesAmount;
 }
 
 let accumulatedMonth = getAccumulatedMonth();
 
-function getTargetMonth(mission, accumulatedMonth) {
-  return Math.floor(mission / accumulatedMonth);
+function getTargetMonth() {
+  let res = Math.floor(mission / accumulatedMonth);
+  if (res > 0) {
+    console.log('Цель будет достигнута: ' + res + 'месяцев');
+  } else {
+    console.log('Цель не будет достигнута');
+  }
+
+  return res;
 }
+getTargetMonth();
 
 let budgetDay = Math.floor(accumulatedMonth / 30);
 
-let getStatusIncome = function() {
+
+
+let getStatusIncome = function () {
   if (budgetDay >= 1200) {
     return ('У вас высокий уровень дохода');
   } else if (budgetDay >= 600 && budgetDay < 1200) {
