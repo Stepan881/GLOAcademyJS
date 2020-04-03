@@ -42,9 +42,9 @@ let appData = {
 
 
   },
-  budgetDay: 1000,
-  budgetMonth: 1500,
-  expensesMonth: 0,
+  budgetDay: 5,
+  budgetMonth: 10,
+  expensesMonth: 5,
 
   getExpensesMonth: function () {
     let res = 0;
@@ -58,8 +58,6 @@ let appData = {
   getBudget: function () {
     return appData.budgetMonth - appData.budgetDay;
   },
-
-
 
   getTargetMonth: function () {
     let res = Math.floor(appData.mission / appData.getBudget());
@@ -82,10 +80,17 @@ let appData = {
       return ('Что то пошло не так');
     }
   }
-
 };
 
 appData.asking();
 appData.getExpensesMonth();
 appData.getTargetMonth();
 console.log(appData.getStatusIncome());
+
+console.log("expenses",appData.expenses);
+
+console.log(`Наша программа включает в себя данные:`);
+for (const key in appData) {
+  
+  console.log(`${key} = ${appData[key]}`);
+}
