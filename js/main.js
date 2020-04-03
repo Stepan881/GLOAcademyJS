@@ -87,7 +87,7 @@ appData.getExpensesMonth();
 appData.getTargetMonth();
 console.log(appData.getStatusIncome());
 
-console.log("expenses",appData.expenses);
+console.log("expenses", appData.expenses);
 
 console.log(`Наша программа включает в себя данные:`);
 for (const key in appData) {
