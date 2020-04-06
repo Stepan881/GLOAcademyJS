@@ -6,7 +6,8 @@ let isNumber = function(n) {
 
 
 let isString = function(n) {
-  if (typeof n === 'string') {
+  let num =  Number(n);
+  if (typeof n === 'string' && isNaN(num)) {
     return true;
   } 
   return false;
@@ -18,6 +19,7 @@ const validateNumber = function (question, answer) {
     res = prompt(question, answer); 
   }
   while(!isNumber(res));  
+  return res; 
 };
 
 const validateString = function (question, answer) {
@@ -25,7 +27,8 @@ const validateString = function (question, answer) {
   do {
     res = prompt(question, answer); 
   }
-  while(!isString(res));  
+  while(!isString(res)); 
+  return res; 
 };
 
 let money;
@@ -34,6 +37,7 @@ let start = function() {
     money = prompt('Ваш месячный доход', '100000');
   }
   while(!isNumber(money));
+
 };
 
 start();
@@ -62,14 +66,12 @@ let appData = {
         appData.addExpenses = addExpenses.toLowerCase().split(',');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
-        let sum = 0,
-            message;
-
         for (let i = 0; i < 2; i++) {
           let message = validateString(`Введите обязательную статью расходов?`, `internet-${i} `);
           let sum = validateNumber('Во сколько это обойдется?', `200${i}`); 
           appData.expenses[message] = sum;
-        }  
+        } 
+         
   },
   budgetDay: 0,
   budgetMonth: 0,
@@ -78,7 +80,7 @@ let appData = {
   getExpensesMonth: function () {
     let res = 0;
     for (const key in appData.expenses) {
-      res +=appData.expenses[key];
+      res += appData.expenses[key];
     }
     console.log('Расходы за месяц: ', res);
     return res;
@@ -148,3 +150,5 @@ str.forEach((el, i) => {
   str[i] = res;
 });
 console.log(str.join(', '));
+
+
