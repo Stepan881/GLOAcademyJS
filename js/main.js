@@ -278,7 +278,7 @@ startBtn.addEventListener('click', appData.start.bind(appData));
 cancelBtn.addEventListener('click', appData.reset.bind(appData));
 btnPlusIncomeAdd.addEventListener('click', appData.addIncomeBlock);
 btnPlusExpensesAdd.addEventListener('click', appData.addExpensesBlock);
-periodSelect.addEventListener('input', appData.changlePeriodSelect);
+periodSelect.addEventListener('input', appData.changlePeriodSelect.bind(appData));
 salaryAmount.addEventListener('input', () => {
   if (salaryAmount.value !== '') {
     startBtn.disabled = false;    
