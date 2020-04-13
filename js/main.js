@@ -10,7 +10,7 @@ const todoCompleted = document.querySelector('.todo-completed');
 // 7) Дела из localStorage подгружаться должны автоматически при загрузки странице
 let todoData = JSON.parse(localStorage.getItem('newTodo'));
 if (todoData === null) {
-  todoData = []
+  todoData = [];
 } else {
   todoData = JSON.parse(localStorage.getItem('newTodo'));
 }
