@@ -6,6 +6,10 @@ const headerButton = document.querySelector('.header-button');
 const todoList = document.querySelector('.todo-list');
 const todoCompleted = document.querySelector('.todo-completed');
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> lesson13
 // 7) Дела из localStorage подгружаться должны автоматически при загрузки странице
 let todoData = JSON.parse(localStorage.getItem('newTodo'));
 if (todoData === null) {
