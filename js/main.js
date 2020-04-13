@@ -6,8 +6,14 @@ const headerButton = document.querySelector('.header-button');
 const todoList = document.querySelector('.todo-list');
 const todoCompleted = document.querySelector('.todo-completed');
 
-  // 7) Дела из localStorage подгружаться должны автоматически при загрузки странице
+
+// 7) Дела из localStorage подгружаться должны автоматически при загрузки странице
 let todoData = JSON.parse(localStorage.getItem('newTodo'));
+if (todoData === null) {
+  todoData = []
+} else {
+  todoData = JSON.parse(localStorage.getItem('newTodo'));
+}
 
 const render = function() {
   todoList.textContent = '';
@@ -69,24 +75,6 @@ todoControl.addEventListener('submit', function(event) {
     //6) Сохранять данные о делах в localStorage (советую в виде массива)
   localStorage.setItem('newTodo', JSON.stringify(todoData));
 
-
- 
-
-
   render();
-  // localStorage.clear();
 });
-
-// console.log(localStorage);
 render();
-
-
-
-
-
-
-
-
-
-
-
