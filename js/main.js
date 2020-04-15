@@ -22,7 +22,7 @@ const render = function() {
   // 6) Сохранять данные о делах в localStorage (советую в виде массива)
   localStorage.setItem('newTodo', JSON.stringify(todoData));
 
-  todoData.forEach(function(item) {
+  todoData.forEach(function(item, i) {
     const li = document.createElement('li');
     li.classList.add('todo-item');
 
@@ -47,7 +47,7 @@ const render = function() {
     // // 5) Удаление дел на кнопку КОРЗИНА
     const todoRemove = li.querySelector('.todo-remove');
     todoRemove.addEventListener('click', function() {
-      todoData.splice(item, 1);
+      todoData.splice(i, 1);
 
       render();
     });
