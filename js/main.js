@@ -267,6 +267,7 @@ class AppData {
     let inputAll = document.querySelectorAll('input:not(.period-select)');
     startBtn.disabled = false;   
 
+    
     inputAll.forEach(element => {
       element.value = '';    
     });
@@ -275,23 +276,16 @@ class AppData {
       element.disabled = false;
     });
 
-    this.income = {};
-    this.incomeMonth = 0;
-    this.addIncome = [];
-    this.expenses = {};
-    this.addExpenses = [];
-    this.deposit = false;
-    this.percentDeposit = 0;
-    this.moneyDeposit = 0;
-    this.budget = 0;
-    this.budgetDay = 0;
-    this.budgetMonth = 0;
-    this.expensesMonth = 0;
+    Object.assign(this, new this.constructor());
 
     startBtn.style.display = 'block';
     cancelBtn.style.display = 'none';
     periodSelect.value = 1;
     periodAmount.textContent = periodSelect.value;
+
+    incomeItems = document.querySelectorAll('.income-items');
+    expensesItems = document.querySelectorAll('.expenses-items');
+    
     incomeItems.forEach((element, i) => {  
       if (i !== 0) {
         element.remove();
