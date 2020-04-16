@@ -346,7 +346,7 @@ class AppData {
       depositBank.style.display = 'none';
       depositAmount.style.display = 'none';
       this.deposit = false;
-      
+      depositPercent.style.display = 'none';
       depositBank.value = '';
       depositAmount.value = '';
       depositPercent.value = '';
@@ -377,16 +377,4 @@ class AppData {
 }
 const appData = new AppData();
 appData.eventListeners();
-
-
-
-
-
-
-
-
-
-
-
-
 
