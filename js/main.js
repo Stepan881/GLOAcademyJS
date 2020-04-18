@@ -30,6 +30,9 @@ const periodAmount = document.querySelector('.period-amount');
 let incomeItems = document.querySelectorAll('.income-items');
 const inputPercent = document.querySelector('[placeholder="Процент"]');
 
+const incomeAdd = document.querySelector('.income_add');
+const expensesAdd = document.querySelector('.expenses_add');
+
 let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
@@ -85,6 +88,8 @@ function disabledInputText() {
   });
   startBtn.style.display = 'none';
   cancelBtn.style.display = 'block';
+  incomeAdd.disabled = true;
+  expensesAdd.disabled = true;
 }
 class AppData {
   constructor() {
@@ -140,7 +145,6 @@ class AppData {
     this.setCookie('budgeMonthValue', budgeMonthValue.value, day);
     this.setCookie('budgetDayValue', budgetDayValue.value, day);
     this.setCookie('expensesMmonthValue', expensesMmonthValue.value, day);
-    this.setCookie('additionalIncomeItems', additionalIncomeItems.value, day);
     this.setCookie('additionalIncomeValue', additionalIncomeValue.value, day);
     this.setCookie('additionalExpensesValue', additionalExpensesValue.value, day);
     this.setCookie('incomePeriodValue', incomePeriodValue.value, day);
@@ -151,11 +155,9 @@ class AppData {
   }
 
   addStoCook() {
-
     this.setCookie('budgeMonthValue', budgeMonthValue.value);
     this.setCookie('budgetDayValue', budgetDayValue.value);
     this.setCookie('expensesMmonthValue', expensesMmonthValue.value);
-    this.setCookie('additionalIncomeItems', additionalIncomeItems.value);
     this.setCookie('additionalIncomeValue', additionalIncomeValue.value);
     this.setCookie('additionalExpensesValue', additionalExpensesValue.value);
     this.setCookie('incomePeriodValue', incomePeriodValue.value);
@@ -165,7 +167,6 @@ class AppData {
     localStorage.setItem('budgeMonthValue', budgeMonthValue.value);
     localStorage.setItem('budgetDayValue', budgetDayValue.value);
     localStorage.setItem('expensesMmonthValue', expensesMmonthValue.value);
-    localStorage.setItem('additionalIncomeItems', additionalIncomeItems.value);
     localStorage.setItem('additionalIncomeValue', additionalIncomeValue.value);
     localStorage.setItem('additionalExpensesValue', additionalExpensesValue.value);
     localStorage.setItem('incomePeriodValue', incomePeriodValue.value);
@@ -201,6 +202,9 @@ class AppData {
       additionalExpensesValue.value = localStorage.getItem('additionalExpensesValue');
       incomePeriodValue.value = localStorage.getItem('incomePeriodValue');
       targetMonthValue.value = localStorage.getItem('targetMonthValue');
+      
+      depositCheck.disabled = true;
+      periodSelect.disabled = true;
       disabledInputText();
     }
 
@@ -353,11 +357,13 @@ class AppData {
 
   reset () {
     this.removeStoCook();
-
+    depositCheck.disabled = false;
+    periodSelect.disabled = false;
     let inputText = document.querySelectorAll('[type="text"]:not(.result-total)');
     let inputAll = document.querySelectorAll('input:not(.period-select)');
     startBtn.disabled = false;   
-
+    incomeAdd.disabled = false;
+    expensesAdd.disabled = false;
     
     inputAll.forEach(element => {
       element.value = '';    
@@ -457,3 +463,4 @@ class AppData {
 const appData = new AppData();
 appData.eventListeners();
 appData.load();
+
