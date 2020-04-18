@@ -129,19 +129,38 @@ class AppData {
 
     this.showResult();
     disabledInputText();
-    this.addStorgate();
+
+    this.addStoCook();
   }
 
-  addStorgate() {
-    document.cookie = `budgeMonthValue=${budgeMonthValue.value}`;
-    document.cookie = `budgetDayValue=${budgetDayValue.value}`;
-    document.cookie = `expensesMmonthValue=${expensesMmonthValue.value}`;
-    document.cookie = `additionalIncomeItems=${additionalIncomeItems.value}`;
-    document.cookie = `additionalIncomeValue=${additionalIncomeValue.value}`;
-    document.cookie = `additionalExpensesValue=${additionalExpensesValue.value}`;
-    document.cookie = `incomePeriodValue=${incomePeriodValue.value}`;
-    document.cookie = `targetMonthValue=${targetMonthValue.value}`;
-    document.cookie = `isLoad=true`;
+  removeStoCook() {
+
+    const day = -1;
+
+    this.setCookie('budgeMonthValue', budgeMonthValue.value, day);
+    this.setCookie('budgetDayValue', budgetDayValue.value, day);
+    this.setCookie('expensesMmonthValue', expensesMmonthValue.value, day);
+    this.setCookie('additionalIncomeItems', additionalIncomeItems.value, day);
+    this.setCookie('additionalIncomeValue', additionalIncomeValue.value, day);
+    this.setCookie('additionalExpensesValue', additionalExpensesValue.value, day);
+    this.setCookie('incomePeriodValue', incomePeriodValue.value, day);
+    this.setCookie('targetMonthValue', targetMonthValue.value, day);
+    this.setCookie('isLoad', 'true', day);
+
+    localStorage.clear();
+  }
+
+  addStoCook() {
+
+    this.setCookie('budgeMonthValue', budgeMonthValue.value);
+    this.setCookie('budgetDayValue', budgetDayValue.value);
+    this.setCookie('expensesMmonthValue', expensesMmonthValue.value);
+    this.setCookie('additionalIncomeItems', additionalIncomeItems.value);
+    this.setCookie('additionalIncomeValue', additionalIncomeValue.value);
+    this.setCookie('additionalExpensesValue', additionalExpensesValue.value);
+    this.setCookie('incomePeriodValue', incomePeriodValue.value);
+    this.setCookie('targetMonthValue', targetMonthValue.value);
+    this.setCookie('isLoad', 'true');
 
     localStorage.setItem('budgeMonthValue', budgeMonthValue.value);
     localStorage.setItem('budgetDayValue', budgetDayValue.value);
@@ -154,9 +173,24 @@ class AppData {
     localStorage.setItem('isLoad', true);
   }
 
+  setCookie(cname, cvalue, exdays = 1) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
   load() {
-
-
+    const arr = document.cookie.split(';');
+    const newCookie = {};
+    arr.forEach(el => {
+      let item = el.trim().split('=');
+      newCookie[item[0]] =  item[1];  
+      if (localStorage.getItem(item[0]) !== item[1]) {
+        this.removeStoCook();
+        return;
+      }
+    });
 
     if (localStorage.length !== 0) {
       budgeMonthValue.value = localStorage.getItem('budgeMonthValue');
@@ -318,7 +352,8 @@ class AppData {
   }
 
   reset () {
-    localStorage.clear();
+    this.removeStoCook();
+
     let inputText = document.querySelectorAll('[type="text"]:not(.result-total)');
     let inputAll = document.querySelectorAll('input:not(.period-select)');
     startBtn.disabled = false;   
@@ -422,29 +457,3 @@ class AppData {
 const appData = new AppData();
 appData.eventListeners();
 appData.load();
-
-////////////////////////////////////////////////////
-
-
-const arr = document.cookie.split(';');
-const newCookie= new Map();
-arr.forEach(el => {
-  let item = el.trim().split('=');
-  newCookie.set(item[0], item[1]);
-});
-
-let keyslocalStorage = Object.keys(localStorage);
-const newlocal= new Map();
-for (let key of keyslocalStorage) {
-  newlocal.set(key, localStorage.getItem(key));
-}
-// console.log(newCookie);
-// console.log(newlocal);
-
-newCookie.forEach((val,key) => {
-  if (!newlocal.has(key)) {
-    console.log('Выход');
-  }
-console.log(key, val);
-
-});
