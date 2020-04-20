@@ -2,21 +2,23 @@
 
 window.addEventListener("DOMContentLoaded", () => {
   // таймер
-  function countTimer(deadline) {
+  function countTimer() {
     let timerHours = document.querySelector('#timer-hours');
     let timerMinutes = document.querySelector('#timer-minutes');
     let timerSeconds = document.querySelector('#timer-seconds');
     
     function getTimeRemaning(){
-      let dateStop = new Date(deadline).getTime();
-      let dateNow = new Date().getTime();
-      let timeRemaining = (dateStop - dateNow) / 1000;
+      let now = new Date();    
+      let tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+      let timeRemaining = (tomorrow - now) / 1000;
+
       let seconds = Math.floor(timeRemaining % 60);
       let minutes = Math.floor((timeRemaining / 60) % 60);
       let hours = Math.floor(timeRemaining / 60 / 60);
       return {timeRemaining, hours, minutes, seconds};
     }
 
+    getTimeRemaning();
     function formatTime(data) {
       if (data < 10) {
         data = '0' + data;
@@ -24,22 +26,14 @@ window.addEventListener("DOMContentLoaded", () => {
       return data;
     }
 
-    let timerId = setInterval( () => {    
+    setInterval( () => {    
       let timer = getTimeRemaning();
       timerHours.textContent = formatTime(timer.hours);
       timerMinutes.textContent = formatTime(timer.minutes);
       timerSeconds.textContent = formatTime(timer.seconds);
-      
-      if (timer.timeRemaining < 0) {
-        clearInterval(timerId);
-        timerHours.textContent = '00';
-        timerMinutes.textContent = '00';
-        timerSeconds.textContent = '00';
-      }
     }, 1000);
 
-
   }
-  countTimer('21 april 2020');
+  countTimer();
 
 });
