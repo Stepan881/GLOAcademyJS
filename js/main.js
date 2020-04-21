@@ -79,7 +79,7 @@ window.addEventListener("DOMContentLoaded", () => {
           animate();
         } else {
           if (evt.target.tagName === 'A') {
-            menu.style.transform = `translate(-100%)`;console.log(evt.target);
+            menu.style.transform = `translate(-100%)`;
           }
         }  
     };
