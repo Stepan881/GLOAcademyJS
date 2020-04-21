@@ -3,9 +3,9 @@
 window.addEventListener("DOMContentLoaded", () => {
     // Плавная прокрутка
     const scrolling = (el) => {
-        if (el.href === undefined) return;
-        let link = el.href.split('#')[1];
-        document.querySelector('#'+link).scrollIntoView({
+      if (el.href === undefined) return;
+      let link = el.href.split('#')[1];
+      document.querySelector('#'+link).scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
@@ -70,13 +70,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const handlerMenu = (evt) => {
         evt.preventDefault();
-        scrolling(evt.target);
+        if (evt.target.tagName === 'A' && evt.target.className !== 'close-btn') {
+          scrolling(evt.target);
+        }
+        
         if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
-            // menu.style.transform = `translate(0)`;
-            count = -100;
-            animate();
+          count = -100;
+          animate();
         } else {
-            menu.style.transform = `translate(-100%)`;
+          if (evt.target.tagName === 'A') {
+            menu.style.transform = `translate(-100%)`;console.log(evt.target);
+          }
         }  
     };
 
