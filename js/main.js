@@ -66,24 +66,14 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-
-
-
-
-
-
-
-
     const handlerMenu = (evt) => {
         evt.preventDefault();
         let target = evt.target;
-        // console.log(target.closest('.menu'));
-        // console.log(target.closest('menu'));
 
-      if (target.closest('.menu') === null && target.closest('menu') === null) {
-        menu.style.transform = `translate(-100%)`;
-        return;  
-      }
+        if (target.closest('.menu') === null && target.closest('menu') === null) {
+          menu.style.transform = `translate(-100%)`;
+          return;  
+        }
 
         if (target.tagName === 'A' && target.className !== 'close-btn') {
           scrolling(target);          
