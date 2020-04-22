@@ -51,7 +51,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const toggleMenu = () => {
     const btnMenu = document.querySelector('.menu');
     const menu = document.querySelector('menu');
-    const closeBtn = document.querySelector('.close-btn');
     
     let count = -100;
     const animate = () => {
@@ -67,27 +66,40 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+
+
+
+
+
+
+
+
     const handlerMenu = (evt) => {
         evt.preventDefault();
         let target = evt.target;
+        // console.log(target.closest('.menu'));
+        // console.log(target.closest('menu'));
+
+      if (target.closest('.menu') === null && target.closest('menu') === null) {
+        menu.style.transform = `translate(-100%)`;
+        return;  
+      }
 
         if (target.tagName === 'A' && target.className !== 'close-btn') {
           scrolling(target);          
         }
         
-        if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
-
+        if (!menu.style.transform || menu.style.transform === `translate(-100%)`){
           count = -100;
-          animate();
-        } else {            
-          if (target.tagName === 'A' || target.closest('.menu')) {
+          animate();         
+        } else {                      
+          if (target.tagName === 'A' || target.closest('.menu')) {            
             menu.style.transform = `translate(-100%)`;
           }
         }  
     };
 
-    btnMenu.addEventListener('click', handlerMenu);
-    menu.addEventListener('click', (event) => {
+    document.body.addEventListener('click', (event) => {
       handlerMenu(event);
     });
   };
