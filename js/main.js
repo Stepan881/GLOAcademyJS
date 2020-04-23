@@ -178,7 +178,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     const dot = document.querySelectorAll('.dot');
 
-
     let currentSlide = 0;
     let interval;
     const prewSlide = (elem, index, strClass) => {
@@ -190,7 +189,6 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     const autoPlaySlide = () => {
-      
       
       prewSlide(slide, currentSlide, 'portfolio-item-active');
       prewSlide(dot, currentSlide, 'dot-active');
@@ -230,9 +228,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (elem === target) {
               currentSlide = index;
             }
-            
           });
-          
         }
           if (currentSlide >= slide.length) {
             currentSlide = 0;
@@ -257,7 +253,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // startSlide(1000);
+    startSlide(1000);
   };
   slider();
 });
