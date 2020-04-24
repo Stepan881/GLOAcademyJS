@@ -256,4 +256,41 @@ window.addEventListener("DOMContentLoaded", () => {
     startSlide(1000);
   };
   slider();
+
+  // переключение фотографий "Наша команда"
+  const toggleImageCommand = () => {
+    const command = document.querySelectorAll('#command .row img');
+
+    let url;
+    command.forEach(el => {
+
+      el.addEventListener('mouseenter', (evt) => {
+        url = evt.target.src;
+        let target = evt.target;
+        target.src = target.getAttribute('data-img');     
+      });
+
+      el.addEventListener('mouseout', (evt) => {      
+        let target = evt.target;
+        target.src = url;
+      });
+    });   
+  };
+  toggleImageCommand();
+
+  // Запрет ввода букв в "Рассчитать стоимость"
+  const calculateCost = () => {
+    const calculate = document.querySelector('#calc');
+    const limitInput = () => {
+
+    };
+
+    calculate.addEventListener('input', (evt) => {
+      let target = evt.target;
+      if (target.type !== 'number') return;
+      target.textContent = target.textContent.replace(/\d/g, ''); 
+    });
+
+  };
+  calculateCost();
 });
