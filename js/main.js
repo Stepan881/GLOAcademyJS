@@ -201,7 +201,7 @@ window.addEventListener("DOMContentLoaded", () => {
       nextSlide(dot, currentSlide, 'dot-active');
     };
 
-    const startSlide = (time = 15000) => {
+    const startSlide = (time = 1000) => {
       interval = setInterval(autoPlaySlide, time);
     };
     
@@ -253,7 +253,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    startSlide(1000);
+    startSlide(15000);
   };
   slider();
 
@@ -281,16 +281,23 @@ window.addEventListener("DOMContentLoaded", () => {
   // Запрет ввода букв в "Рассчитать стоимость"
   const calculateCost = () => {
     const calculate = document.querySelector('#calc');
-    const limitInput = () => {
-
-    };
-
+    let text;
     calculate.addEventListener('input', (evt) => {
       let target = evt.target;
       if (target.type !== 'number') return;
-      target.textContent = target.textContent.replace(/\d/g, ''); 
+
+      if (/[0-9]/g.test(target.value)) {  
+        text = target.value;
+        console.log(text);
+      } else {
+        if (text !== undefined) {
+          text = 0;         
+        }
+        target.value = text;
+      }
     });
 
-  };
+  }; 
   calculateCost();
 });
+
