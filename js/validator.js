@@ -99,7 +99,10 @@ class Validator {
       }
       .validator-error {
         font-size: 14px;
-        color: red;
+        color: red;    
+        z-index: 1;
+        position: relative;
+
       }
     `;
     document.head.appendChild(style);
