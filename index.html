@@ -451,6 +451,10 @@
 		selector: '#form2',
 		pattern: {},
 		method: {
+			'form1-name': [
+				['notEmpty'],
+				['pattern', 'name'],
+			],
 			'form2-message': [
 				['notEmpty'],
 				['pattern', 'message'],
