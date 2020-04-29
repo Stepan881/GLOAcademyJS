@@ -16,9 +16,9 @@ window.addEventListener("DOMContentLoaded", () => {
     let timerHours = document.querySelector('#timer-hours');
     let timerMinutes = document.querySelector('#timer-minutes');
     let timerSeconds = document.querySelector('#timer-seconds');
-    
+
     function getTimeRemaning(){
-      let now = new Date();    
+      let now = new Date();
       let tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
       let timeRemaining = (tomorrow - now) / 1000;
 
@@ -36,7 +36,7 @@ window.addEventListener("DOMContentLoaded", () => {
       return data;
     }
 
-    setInterval( () => {    
+    setInterval( () => {
       let timer = getTimeRemaning();
       timerHours.textContent = formatTime(timer.hours);
       timerMinutes.textContent = formatTime(timer.minutes);
@@ -51,7 +51,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const toggleMenu = () => {
     const btnMenu = document.querySelector('.menu');
     const menu = document.querySelector('menu');
-    
+
     let count = -100;
     const animate = () => {
         if (document.documentElement.clientWidth < 768) {
@@ -67,27 +67,27 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     const handlerMenu = (evt) => {
-      
+
         let target = evt.target;
 
         if (target.closest('.menu') === null && target.closest('menu') === null) {
           menu.style.transform = `translate(-100%)`;
-          return;  
+          return;
         }
 
         if (target.tagName === 'A' && target.className !== 'close-btn') {
           evt.preventDefault();
-          scrolling(target);          
+          scrolling(target);
         }
-        
+
         if (!menu.style.transform || menu.style.transform === `translate(-100%)`){
           count = -100;
-          animate();         
-        } else {                      
-          if (target.tagName === 'A' || target.closest('.menu')) {            
+          animate();
+        } else {
+          if (target.tagName === 'A' || target.closest('.menu')) {
             menu.style.transform = `translate(-100%)`;
           }
-        }  
+        }
     };
 
     document.body.addEventListener('click', (event) => {
@@ -95,7 +95,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   };
   toggleMenu();
- 
+
  // popup
   const togglePopup = () => {
     const popup = document.querySelector('.popup');
@@ -117,7 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
         if (!target) {
           popup.style.display = 'none';
         }
-      } 
+      }
     });
   };
   togglePopup();
@@ -171,9 +171,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const btn = document.querySelectorAll('.portfolio-btn');
     const dots = document.querySelector('.portfolio-dots');
     const slider = document.querySelector('.portfolio-content');
-    
+
     for (let i = 0; i < slide.length; i++) {
-      dots.insertAdjacentHTML('beforeend', 
+      dots.insertAdjacentHTML('beforeend',
       `<li class="dot ${i === 0 ? 'dot-active' : ''}"></li>`);
     }
     const dot = document.querySelectorAll('.dot');
@@ -189,7 +189,7 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     const autoPlaySlide = () => {
-      
+
       prewSlide(slide, currentSlide, 'portfolio-item-active');
       prewSlide(dot, currentSlide, 'dot-active');
 
@@ -204,7 +204,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const startSlide = (time = 2000) => {
       interval = setInterval(autoPlaySlide, time);
     };
-    
+
     const stopSlide = () => {
       clearInterval(interval);
     };
@@ -267,14 +267,14 @@ window.addEventListener("DOMContentLoaded", () => {
       el.addEventListener('mouseenter', (evt) => {
         url = evt.target.src;
         let target = evt.target;
-        target.src = target.getAttribute('data-img');     
+        target.src = target.getAttribute('data-img');
       });
 
-      el.addEventListener('mouseout', (evt) => {      
+      el.addEventListener('mouseout', (evt) => {
         let target = evt.target;
         target.src = url;
       });
-    });   
+    });
   };
   toggleImageCommand();
 
@@ -283,15 +283,15 @@ window.addEventListener("DOMContentLoaded", () => {
     const calculate = document.querySelector('#calc');
     calculate.addEventListener('keydown', (evt) => {
 
-      let target = evt.target;     
-      
+      let target = evt.target;
+
       if (/[^\d]/g.test(target.value) ||
         target.type !== 'number'||
         evt.keyCode > 100||
         evt.keyCode === 69) {evt.preventDefault();}
-      
+
     });
-  }; 
+  };
   calculateCost();
 
   // калькулятор
@@ -307,16 +307,16 @@ window.addEventListener("DOMContentLoaded", () => {
     let intervlId;
     const renderTotal = (total) => {
       let startTotal = 0;
-      
+
       clearInterval(intervlId);
 
       if (calcType.options[calcType.selectedIndex] === 0) {
         clearInterval(intervlId);
         startTotal = 0;
       }
-      
+
       intervlId = setInterval(()=> {
-        startTotal += total.toString().length;        
+        startTotal += total.toString().length;
         totalValue.textContent = startTotal;
         if (startTotal >= total) {
           totalValue.textContent = total;
@@ -331,7 +331,7 @@ window.addEventListener("DOMContentLoaded", () => {
       let dayValue = 1;
       const typeValue = calcType.options[calcType.selectedIndex].value;
       const squareValue = +calcSquare.value;
-      
+
       if (calcCount.value > 1) {
         countValue += (calcCount.value - 1) / 10;
       }
@@ -344,7 +344,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
       if (typeValue && squareValue) {
         total = price * typeValue * squareValue * countValue * dayValue;
-        
+
       }
       renderTotal(total);
     };
@@ -370,38 +370,70 @@ window.addEventListener("DOMContentLoaded", () => {
     const loadMessage = 'Загрузка...';
     const successMessage = 'Спасибо! Мы с вами свяжемся!';
 
-    const form = document.querySelector('#form1');
-    const statusMessage = document.createElement('div'); 
+    const forms = document.querySelectorAll('form');
+    const statusMessage = document.createElement('div');
     statusMessage.style.cssText = `font-size: 2rem;`;
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      form.appendChild(statusMessage);
-
+    const postData = (body, outputData, errorData) => {
       const request = new XMLHttpRequest();
 
       request.addEventListener('readystatechange', () => {
-        console.log(request.readyState);
-        statusMessage.textContent = loadMessage;      
         if (request.readyState !== 4) {
           return;
         }
         if (request.status === 200) {
-          statusMessage.textContent = successMessage;
+          outputData();
         } else {
-          statusMessage.textContent = errorMessage;
+          errorData(request.status);
+
+        }
+      });
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'application/json');
+
+      request.send(JSON.stringify(body));
+    };
+
+    forms.forEach(form => {
+
+      form.addEventListener('input', (evt) => {
+        let target = evt.target;
+
+
+        if (target.name === 'user_phone') {
+          target.value = target.value.replace(/[^\+\d]/g, '');
+          console.log(target.value);
+        }
+
+        if (target.name === 'user_name' || target.name === 'user_message') {
+          target.value = target.value.replace(/[^а-я ]/gi, '');
+          console.log(target.value);
         }
       });
 
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'multipart/form-data');
-      const formData = new FormData(form);
-      request.send(formData);
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        form.appendChild(statusMessage);
 
-
+        const formData = new FormData(form);
+        statusMessage.textContent = loadMessage;
+        let body = {};
+        for (let val of formData.entries()) {
+          body[val[0]] = val[1];
+        }
+        postData(body,
+          () => {
+            statusMessage.textContent = successMessage;
+            form.reset();
+          },
+          (error) => {
+            console.log(error);
+            statusMessage.textContent = errorMessage;
+          });
+      });
     });
   };
 
   sendForm();
-}); 
+});
 
