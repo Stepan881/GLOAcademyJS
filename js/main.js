@@ -67,7 +67,7 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     const handlerMenu = (evt) => {
-        evt.preventDefault();
+      
         let target = evt.target;
 
         if (target.closest('.menu') === null && target.closest('menu') === null) {
@@ -76,6 +76,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         if (target.tagName === 'A' && target.className !== 'close-btn') {
+          evt.preventDefault();
           scrolling(target);          
         }
         
@@ -95,7 +96,6 @@ window.addEventListener("DOMContentLoaded", () => {
   };
   toggleMenu();
  
-
  // popup
   const togglePopup = () => {
     const popup = document.querySelector('.popup');
@@ -363,5 +363,45 @@ window.addEventListener("DOMContentLoaded", () => {
 
   calc(100);
 
-});
+
+  // Отправка формы
+  const sendForm = () => {
+    const errorMessage = 'Что то пошло не так...';
+    const loadMessage = 'Загрузка...';
+    const successMessage = 'Спасибо! Мы с вами свяжемся!';
+
+    const form = document.querySelector('#form1');
+    const statusMessage = document.createElement('div'); 
+    statusMessage.style.cssText = `font-size: 2rem;`;
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form.appendChild(statusMessage);
+
+      const request = new XMLHttpRequest();
+
+      request.addEventListener('readystatechange', () => {
+        console.log(request.readyState);
+        statusMessage.textContent = loadMessage;      
+        if (request.readyState !== 4) {
+          return;
+        }
+        if (request.status === 200) {
+          statusMessage.textContent = successMessage;
+        } else {
+          statusMessage.textContent = errorMessage;
+        }
+      });
+
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'multipart/form-data');
+      const formData = new FormData(form);
+      request.send(formData);
+
+
+    });
+  };
+
+  sendForm();
+}); 
 
