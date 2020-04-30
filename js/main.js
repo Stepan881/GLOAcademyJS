@@ -317,9 +317,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
       intervlId = setInterval(()=> {
         startTotal += total.toString().length;
-        totalValue.textContent = startTotal;
+        totalValue.textContent = Math.trunc(startTotal);
         if (startTotal >= total) {
-          totalValue.textContent = total;
+          totalValue.textContent = Math.trunc(total);
           clearInterval(intervlId);
         }
       }, 10);
@@ -374,7 +374,6 @@ window.addEventListener("DOMContentLoaded", () => {
     const forms = document.querySelectorAll('form');
     const statusMessage = document.createElement('div');
           statusMessage.classList.add('status-message');
-          statusMessage.style.cssText = `font-size: 2rem;`;
 
     const loader = () => {
       return (`<style>
@@ -388,10 +387,10 @@ window.addEventListener("DOMContentLoaded", () => {
                   animation-delay: 1s;
                   background-color: rgba(0,0,0,0.33);
                   
-                  position: absolute;
+                  position: fixed;
                   left: 0;
                   top: 0;
-
+                      z-index: 999999;
                 }
 
                 .item-1 {
@@ -613,7 +612,7 @@ window.addEventListener("DOMContentLoaded", () => {
     forms.forEach(form => {
       form.addEventListener('input', (evt) => {
         let target = evt.target;
-
+        console.log(target);
         if (target.name === 'user_phone') {
           target.value = target.value.replace(/[^\+\d]/g, '');
         }
@@ -626,7 +625,8 @@ window.addEventListener("DOMContentLoaded", () => {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
         form.appendChild(statusMessage);
-
+        statusMessage.style.cssText = `font-size: 2rem;
+              color: #fff; `;
         const formData = new FormData(form);
         statusMessage.textContent = loadMessage;
 
@@ -639,12 +639,16 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         postData(body,
           () => {
+            statusMessage.style.cssText = `font-size: 2rem;
+              color: green; `;
             removeStatusMessage();
             statusMessage.textContent = successMessage;
             form.reset();
             loaderHtml.remove();
           },
           (error) => {
+            statusMessage.style.cssText = `font-size: 2rem;
+              color: red; `;
             removeStatusMessage();
             statusMessage.textContent = errorMessage;
             loaderHtml.remove();
