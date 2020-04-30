@@ -590,29 +590,29 @@ window.addEventListener("DOMContentLoaded", () => {
       }, 5000);
     };
 
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status);
-
-        }
+    const postData = (body) => {
+      return new Promise ((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.addEventListener('readystatechange', () => {
+          if (request.readyState !== 4) {
+            return;
+          }
+          if (request.status === 200) {
+           resolve();
+          } else {
+           reject(request.status);
+          }
+        });
+        request.open('POST', './server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify(body));
       });
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
 
-      request.send(JSON.stringify(body));
+
     };
     forms.forEach(form => {
       form.addEventListener('input', (evt) => {
         let target = evt.target;
-        console.log(target);
         if (target.name === 'user_phone') {
           target.value = target.value.replace(/[^\+\d]/g, '');
         }
@@ -621,6 +621,10 @@ window.addEventListener("DOMContentLoaded", () => {
           target.value = target.value.replace(/[^а-я ]/gi, '');
         }
       });
+
+
+
+
 
       form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -637,22 +641,29 @@ window.addEventListener("DOMContentLoaded", () => {
         for (let val of formData.entries()) {
           body[val[0]] = val[1];
         }
-        postData(body,
-          () => {
+
+        const outputData = () => {
             statusMessage.style.cssText = `font-size: 2rem;
               color: green; `;
             removeStatusMessage();
             statusMessage.textContent = successMessage;
             form.reset();
             loaderHtml.remove();
-          },
-          (error) => {
+        };
+
+        const error = () => {
             statusMessage.style.cssText = `font-size: 2rem;
               color: red; `;
             removeStatusMessage();
             statusMessage.textContent = errorMessage;
             loaderHtml.remove();
-          });
+        };
+
+
+        postData(body)
+          .then(outputData)
+          .catch(error);
+
       });
     });
   };
