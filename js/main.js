@@ -642,12 +642,13 @@ window.addEventListener("DOMContentLoaded", () => {
       });
 
       const postData = (body) => {
+        console.log('body: ', body);
         return fetch('./server.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(body),
+          body: body,
           mode: 'cors'
         }); 
       };
@@ -668,12 +669,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
         bodyHtml.insertAdjacentHTML(`beforeend`, loader());
         const loaderHtml = document.querySelector('.preloader');
-
-        let body = {};
-        for (let val of formData.entries()) {
-          body[val[0]] = val[1];
-        }
-
+      
         const outputData = () => {
             statusMessage.style.cssText = `font-size: 2rem;
               color: green; `;
@@ -691,7 +687,7 @@ window.addEventListener("DOMContentLoaded", () => {
             loaderHtml.remove();
         };
 
-        postData(body)
+        postData(formData)
           .then((response) => {
             if (response.status !== 200) {
                 throw 'error !!! ';
