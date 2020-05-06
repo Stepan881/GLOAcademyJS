@@ -590,28 +590,6 @@ window.addEventListener("DOMContentLoaded", () => {
       }, 5000);
     };
 
-    const postData = (body) => {
-      return new Promise ((resolve, reject) => {
-        const request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', () => {
-          if (request.readyState !== 4) {
-            return;
-          }
-          if (request.status === 200) {
-           resolve();
-          } else {
-           reject(request.status);
-          }
-        });
-        request.open('POST', './server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify(body));
-      });
-
-
-    };
-
-
     const errorInput = (inp, text) => {   
       let div = inp.parentNode; 
       div = div.querySelector('.input-error');
@@ -663,6 +641,17 @@ window.addEventListener("DOMContentLoaded", () => {
         }
       });
 
+      const postData = (body) => {
+        return fetch('./server.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body),
+          mode: 'cors'
+        }); 
+      };
+
       form.addEventListener('submit', (event) => {
         event.preventDefault();
         const firmTel = [...event.target.elements].filter((item) => item.name === 'user_phone');
@@ -703,11 +692,18 @@ window.addEventListener("DOMContentLoaded", () => {
         };
 
         postData(body)
-          .then(outputData)
+          .then((response) => {
+            if (response.status !== 200) {
+                throw 'error !!! ';
+            }          
+            outputData();
+          })
           .catch(error);
 
       });
     });
+
+
   };
 
   sendForm();
