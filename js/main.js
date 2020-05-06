@@ -648,7 +648,7 @@ window.addEventListener("DOMContentLoaded", () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: body,
+          body: JSON.stringify(body),
           mode: 'cors'
         }); 
       };
@@ -670,6 +670,11 @@ window.addEventListener("DOMContentLoaded", () => {
         bodyHtml.insertAdjacentHTML(`beforeend`, loader());
         const loaderHtml = document.querySelector('.preloader');
       
+        let body = {};
+        for (let val of formData.entries()) {
+          body[val[0]] = val[1];
+        }
+
         const outputData = () => {
             statusMessage.style.cssText = `font-size: 2rem;
               color: green; `;
@@ -686,8 +691,9 @@ window.addEventListener("DOMContentLoaded", () => {
             statusMessage.textContent = errorMessage;
             loaderHtml.remove();
         };
+        
 
-        postData(formData)
+        postData(body)
           .then((response) => {
             if (response.status !== 200) {
                 throw 'error !!! ';
