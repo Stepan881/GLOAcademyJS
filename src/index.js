@@ -1,4 +1,8 @@
 'use strict';
+
+
+import "regenerator-runtime/runtime";
+import "@babel/polyfill";
 import 'nodelist-foreach-polyfill';
 import 'formdata-polyfill';
 import 'element-closest';
