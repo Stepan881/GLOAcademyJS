@@ -22,9 +22,13 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
     "element-closest": "^3.0.2",
+    "element-remove": "^1.0.4",
     "es6-promise": "^4.2.8",
     "fetch-polyfill": "^0.8.2",
     "formdata-polyfill": "^3.0.19",
-    "nodelist-foreach-polyfill": "^1.2.0"
+    "nodelist-foreach-polyfill": "^1.2.0",
+    "scroll-behavior-polyfill": "^2.0.13",
+    "url-polyfill": "^1.1.8",
+    "whatwg-fetch": "^3.0.0"
   }
 }
